@@ -1,4 +1,4 @@
-<?php require_once "bootstrap.php"?>
+<?php require_once "bootstrap.php" ?>
 <?php include("layouts/frontend/header.php"); ?>
 <?php include("layouts/frontend/nav.php"); ?>
 
@@ -19,6 +19,15 @@
 
         <!-- ***************************** Tool bar *****************************-->
         <div class="col-md-9">
+            <div class="row">
+                <a href="<?php echo DIR; ?>newExchange.php">
+                    <button class="btn btn-success pull-right">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        New Exchange
+                    </button>
+                </a>
+            </div>
+            <hr>
             <div class="row">
                 <form class="navbar-form" role="search">
                     <div class="input-group">
