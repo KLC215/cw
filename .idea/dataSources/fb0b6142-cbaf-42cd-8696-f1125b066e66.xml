@@ -10,11 +10,11 @@
     <schema id="5" name="performance_schema"/>
     <schema id="6" name="sys"/>
     <table id="7" parent="1" name="category"/>
-    <table id="8" parent="1" name="message"/>
-    <table id="9" parent="1" name="photo"/>
-    <table id="10" parent="1" name="status"/>
-    <table id="11" parent="1" name="toy"/>
-    <table id="12" parent="1" name="user"/>
+    <table id="8" parent="1" name="photo"/>
+    <table id="9" parent="1" name="status"/>
+    <table id="10" parent="1" name="toy"/>
+    <table id="11" parent="1" name="member"/>
+    <table id="12" parent="1" name="message"/>
     <column id="13" parent="7" name="id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
@@ -41,12 +41,13 @@
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="19" parent="8" name="content">
+    <column id="19" parent="8" name="url">
+      <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="20" parent="8" name="public">
+    <column id="20" parent="8" name="toy_id">
       <mandatory>1</mandatory>
-      <data-type>char(1)|0</data-type>
+      <data-type>int(11)|0</data-type>
     </column>
     <column id="21" parent="8" name="created_at">
       <data-type>timestamp|0</data-type>
@@ -56,22 +57,22 @@
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <key id="23" parent="8" name="PRIMARY">
+    <index id="23" parent="8" name="toy_id">
+      <columns>toy_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="24" parent="8" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="24" parent="9" name="id">
+    <column id="25" parent="9" name="id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="25" parent="9" name="url">
+    <column id="26" parent="9" name="name">
       <mandatory>1</mandatory>
-      <data-type>text|0</data-type>
-    </column>
-    <column id="26" parent="9" name="toy_id">
-      <mandatory>1</mandatory>
-      <data-type>int(11)|0</data-type>
+      <data-type>varchar(50)|0</data-type>
     </column>
     <column id="27" parent="9" name="created_at">
       <data-type>timestamp|0</data-type>
@@ -81,131 +82,155 @@
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <index id="29" parent="9" name="toy_id">
-      <columns>toy_id</columns>
-      <desc-columns></desc-columns>
-    </index>
-    <key id="30" parent="9" name="PRIMARY">
+    <key id="29" parent="9" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="31" parent="10" name="id">
+    <column id="30" parent="10" name="id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="32" parent="10" name="name">
-      <mandatory>1</mandatory>
-      <data-type>varchar(50)|0</data-type>
-    </column>
-    <column id="33" parent="10" name="created_at">
-      <data-type>timestamp|0</data-type>
-      <default-expression>CURRENT_TIMESTAMP</default-expression>
-    </column>
-    <column id="34" parent="10" name="updated_at">
-      <data-type>timestamp|0</data-type>
-      <default-expression>CURRENT_TIMESTAMP</default-expression>
-    </column>
-    <key id="35" parent="10" name="PRIMARY">
-      <columns>id</columns>
-      <primary>1</primary>
-    </key>
-    <column id="36" parent="11" name="id">
-      <mandatory>1</mandatory>
-      <data-type>int(11)|0</data-type>
-      <sequence-identity>1</sequence-identity>
-    </column>
-    <column id="37" parent="11" name="name">
+    <column id="31" parent="10" name="toy">
       <mandatory>1</mandatory>
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="38" parent="11" name="description">
+    <column id="32" parent="10" name="description">
       <data-type>text|0</data-type>
     </column>
-    <column id="39" parent="11" name="expect_to_change">
+    <column id="33" parent="10" name="expect_to_change">
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="40" parent="11" name="click_rate">
+    <column id="34" parent="10" name="click_rate">
+      <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
     </column>
-    <column id="41" parent="11" name="category_id">
+    <column id="35" parent="10" name="member_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="42" parent="11" name="status_id">
+    <column id="36" parent="10" name="category_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="43" parent="11" name="created_at">
+    <column id="37" parent="10" name="status_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="38" parent="10" name="created_at">
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <column id="44" parent="11" name="updated_at">
+    <column id="39" parent="10" name="updated_at">
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <index id="45" parent="11" name="category_id">
+    <index id="40" parent="10" name="category_id">
       <columns>category_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="46" parent="11" name="status_id">
+    <index id="41" parent="10" name="member_id">
+      <columns>member_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="42" parent="10" name="status_id">
       <columns>status_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="47" parent="11" name="PRIMARY">
+    <key id="43" parent="10" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="48" parent="12" name="id">
+    <column id="44" parent="11" name="id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="49" parent="12" name="username">
+    <column id="45" parent="11" name="username">
       <mandatory>1</mandatory>
       <data-type>varchar(32)|0</data-type>
     </column>
-    <column id="50" parent="12" name="email">
+    <column id="46" parent="11" name="email">
       <mandatory>1</mandatory>
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="51" parent="12" name="password">
+    <column id="47" parent="11" name="password">
       <mandatory>1</mandatory>
       <data-type>char(32)|0</data-type>
     </column>
-    <column id="52" parent="12" name="score">
+    <column id="48" parent="11" name="score">
       <mandatory>1</mandatory>
       <data-type>decimal(4,1)|0</data-type>
       <default-expression>&apos;100.0&apos;</default-expression>
     </column>
-    <column id="53" parent="12" name="type">
+    <column id="49" parent="11" name="user_type">
       <mandatory>1</mandatory>
       <data-type>char(1)|0</data-type>
     </column>
-    <column id="54" parent="12" name="toy_id">
-      <data-type>int(11)|0</data-type>
-    </column>
-    <column id="55" parent="12" name="msg_id">
-      <data-type>int(11)|0</data-type>
-    </column>
-    <column id="56" parent="12" name="created_at">
+    <column id="50" parent="11" name="created_at">
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <column id="57" parent="12" name="updated_at">
+    <column id="51" parent="11" name="updated_at">
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <index id="58" parent="12" name="msg_id">
-      <columns>msg_id</columns>
+    <key id="52" parent="11" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="53" parent="12" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="54" parent="12" name="from_user">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="55" parent="12" name="to_user">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="56" parent="12" name="content">
+      <mandatory>1</mandatory>
+      <data-type>text|0</data-type>
+    </column>
+    <column id="57" parent="12" name="viewed">
+      <mandatory>1</mandatory>
+      <data-type>char(1)|0</data-type>
+    </column>
+    <column id="58" parent="12" name="accepted">
+      <mandatory>1</mandatory>
+      <data-type>char(1)|0</data-type>
+    </column>
+    <column id="59" parent="12" name="status_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="60" parent="12" name="created_at">
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="61" parent="12" name="updated_at">
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <index id="62" parent="12" name="from_user">
+      <columns>from_user</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="59" parent="12" name="toy_id">
-      <columns>toy_id</columns>
+    <index id="63" parent="12" name="status_id">
+      <columns>status_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="60" parent="12" name="PRIMARY">
+    <index id="64" parent="12" name="to_user">
+      <columns>to_user</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="65" parent="12" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>

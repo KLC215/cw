@@ -1,5 +1,5 @@
 <?php require_once "bootstrap.php" ?>
-<?php include("user.db.php"); ?>
+<?php include("db.member.php"); ?>
 <?php include("layouts/frontend/header.php"); ?>
 <?php include("layouts/frontend/nav.php"); ?>
 

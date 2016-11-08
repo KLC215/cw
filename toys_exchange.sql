@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2016 at 04:52 PM
+-- Generation Time: Nov 05, 2016 at 01:17 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+
 
 --
 -- Database: `toys_exchange`
@@ -38,10 +38,11 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Board Game', '2016-11-03 11:47:55', '2016-11-03 11:47:55'),
-(2, 'Model', '2016-11-03 11:48:33', '2016-11-03 11:48:33'),
-(3, 'Figure', '2016-11-03 11:48:57', '2016-11-03 11:48:57'),
-(4, 'Doll', '2016-11-03 11:50:30', '2016-11-03 11:50:30');
+(1, 'Board Game', '2016-11-05 09:57:59', '2016-11-05 09:57:59'),
+(2, 'Model', '2016-11-05 09:57:59', '2016-11-05 09:57:59'),
+(3, 'Figure', '2016-11-05 09:57:59', '2016-11-05 09:57:59'),
+(4, 'Doll', '2016-11-05 09:57:59', '2016-11-05 09:57:59'),
+(5, 'Other', '2016-11-05 09:57:59', '2016-11-05 09:57:59');
 
 -- --------------------------------------------------------
 
@@ -89,10 +90,10 @@ CREATE TABLE `status` (
 --
 
 INSERT INTO `status` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Accepts Exchange', '2016-11-03 11:53:43', '2016-11-03 11:53:43'),
-(2, 'Waiting For Reply', '2016-11-03 11:55:03', '2016-11-03 11:55:03'),
-(3, 'Exchange Successful', '2016-11-03 11:55:48', '2016-11-03 11:55:48'),
-(4, 'Cancel', '2016-11-03 11:55:55', '2016-11-03 11:55:55');
+(1, 'Accepts Exchange', '2016-11-05 09:57:59', '2016-11-05 09:57:59'),
+(2, 'Waiting For Reply', '2016-11-05 09:57:59', '2016-11-05 09:57:59'),
+(3, 'Exchange Successful', '2016-11-05 09:57:59', '2016-11-05 09:57:59'),
+(4, 'Cancel', '2016-11-05 09:57:59', '2016-11-05 09:57:59');
 
 -- --------------------------------------------------------
 
@@ -102,10 +103,11 @@ INSERT INTO `status` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `toy` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `toy` varchar(255) NOT NULL,
   `description` text,
   `expect_to_change` text NOT NULL,
-  `click_rate` int(11) DEFAULT NULL,
+  `click_rate` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -125,7 +127,6 @@ CREATE TABLE `user` (
   `password` char(32) NOT NULL,
   `score` decimal(4,1) NOT NULL DEFAULT '100.0',
   `user_type` char(1) NOT NULL,
-  `toy_id` int(11) DEFAULT NULL,
   `msg_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -135,9 +136,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `password`, `score`, `user_type`, `toy_id`, `msg_id`, `created_at`, `updated_at`) VALUES
-(3, 'admin', 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', '100.0', '0', NULL, NULL, '2016-11-03 14:30:42', '2016-11-03 14:30:42'),
-(30, 'klc', 'klc@klc.com', 'f2e99bd07d1480cb1d7f709d4a839935', '100.0', '1', NULL, NULL, '2016-11-03 16:15:00', '2016-11-03 16:15:00');
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `score`, `user_type`, `msg_id`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', '100.0', '0', NULL, '2016-11-05 09:57:59', '2016-11-05 09:57:59'),
+(2, 'klc', 'klc@klc.com', 'f2e99bd07d1480cb1d7f709d4a839935', '100.0', '1', NULL, '2016-11-05 09:58:23', '2016-11-05 09:58:23');
 
 --
 -- Indexes for dumped tables
@@ -173,6 +174,7 @@ ALTER TABLE `status`
 --
 ALTER TABLE `toy`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
   ADD KEY `category_id` (`category_id`),
   ADD KEY `status_id` (`status_id`);
 
@@ -181,7 +183,6 @@ ALTER TABLE `toy`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `toy_id` (`toy_id`),
   ADD KEY `msg_id` (`msg_id`);
 
 --
@@ -192,7 +193,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `message`
 --
@@ -202,7 +203,7 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT for table `photo`
 --
 ALTER TABLE `photo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `status`
 --
@@ -212,12 +213,12 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `toy`
 --
 ALTER TABLE `toy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
